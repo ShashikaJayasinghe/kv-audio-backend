@@ -1,6 +1,6 @@
 import Review from "../models/review.js";
 
-export function addReview (req,res) {
+export async function addReview (req,res) {
     if (req.user == null) {
         res.status(401).json({
             message : "please login and try again!"
@@ -15,11 +15,18 @@ export function addReview (req,res) {
 
     const newReview = new Review(data);
 
-    newReview.save().then(()=>{
-        res.json({message : "Review added successfully"});
-    }).catch((error)=>{
+    try {
+        await newReview.save();
+        res.json({message : "Review added successfully"})
+    }catch (error) {
         res.status(500).json({error : "Review addition failed"});
-    });
+    }
+
+    // newReview.save().then(()=>{
+    //     res.json({message : "Review added successfully"});
+    // }).catch((error)=>{
+    //     res.status(500).json({error : "Review addition failed"});
+    // });
 }
 
 export async function getReviews (req,res) {

@@ -21,9 +21,9 @@ export async function addProduct (req, res) {
 
     try {
         await newProduct.save();
-        res.json({message : "Product registered successfully"});
+        res.json({message : "Product added successfully"});
     }catch (error) {
-        res.status(500).json({error : "product registration failed"});
+        res.status(500).json({error : "product added failed"});
     }
 
     // newProduct.save().then(()=>{
