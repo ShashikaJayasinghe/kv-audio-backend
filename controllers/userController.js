@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
-
 export function registerUser (req, res) {
     const data = req.body;
     data.password = bcrypt.hashSync(data.password,10);
@@ -32,7 +31,7 @@ export function loginUser (req, res) {
                     lastName : user.lastName,
                     email : user.email,
                     role : user.role,
-
+                    profilePicture : user.profilePicture
                 },process.env.JWT_SECRET);               
                 res.json({message: "Login successful", token : token});
             }else {
