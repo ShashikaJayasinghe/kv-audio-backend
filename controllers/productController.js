@@ -1,6 +1,6 @@
 import Product from "../models/product.js";
 
-export function addProduct (req, res) {
+export async function addProduct (req, res) {
     console.log(req.user)
     if (req.user == null) {     //if not have token we can't create product if not user 
         res.status(401).json({
@@ -19,9 +19,16 @@ export function addProduct (req, res) {
     const data = req.body;
     const newProduct = new Product(data);
 
-    newProduct.save().then(()=>{
-        res.json({message : "Product added successfully"});
-    }).catch((error)=>{
-        res.status(500).json({error : "product addition failed"})
-    })
+    try {
+        await newProduct.save();
+        res.json({message : "Product registered successfully"});
+    }catch (error) {
+        res.status(500).json({error : "product registration failed"});
+    }
+
+    // newProduct.save().then(()=>{
+    //     res.json({message : "Product added successfully"});
+    // }).catch((error)=>{
+    //     res.status(500).json({error : "product addition failed"})
+    // })
 }
