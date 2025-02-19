@@ -48,6 +48,28 @@ export async function loginUser(req, res) {
     }
 }
 
+export function isItAdmin (req) {
+    let isAdmin = false;
+    if (req.user != null && req.user.role == "admin") {     //if user is admin we can see all products
+        isAdmin = true;
+    }   
+    return isAdmin; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // export function loginUser (req, res) {
 //     const data = req.body;
 //     User.findOne({
