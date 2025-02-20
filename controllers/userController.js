@@ -38,6 +38,7 @@ export async function loginUser(req, res) {
                 email: user.email,
                 role: user.role,
                 profilePicture: user.profilePicture,
+                phone: user.phone,
             },
             process.env.JWT_SECRET
             
@@ -54,6 +55,14 @@ export function isItAdmin (req) {
         isAdmin = true;
     }   
     return isAdmin; 
+}
+
+export function isItCustomer (req) {
+    let isCustomer = false;
+    if (req.user != null && req.user.role == "customer") {
+        isCustomer = true;
+    }
+    return isCustomer;
 }
 
 

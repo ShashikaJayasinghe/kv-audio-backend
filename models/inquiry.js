@@ -9,8 +9,7 @@ const inquirySchema = new mongoose.Schema({
     },
     email : {
         type : String,
-        required : true,
-        unique : true
+        required : true
     },
     message : {
         type : String,
@@ -21,7 +20,7 @@ const inquirySchema = new mongoose.Schema({
         required : true 
     },
     date : {
-        type : String,
+        type : Date,
         required : true,
         default : Date.now()
     },
@@ -38,4 +37,5 @@ const inquirySchema = new mongoose.Schema({
 });
 
 const Inquiry = mongoose.model("inquiries", inquirySchema);
+
 export default Inquiry;
