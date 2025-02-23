@@ -43,7 +43,7 @@ export async function loginUser(req, res) {
             process.env.JWT_SECRET
             
         );
-        res.json({ message: "Login successful", token : token });
+        res.json({ message: "Login successful", token : token, user : user });
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }
