@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
         required : true
     },
     price : {
-        type : Number,
+        type : Number,      //daily rental price
         required : true
     },
     category : {
