@@ -35,7 +35,7 @@ const productSchema = new mongoose.Schema({
     image : {
         type : [String],
         required : true,
-        default : ["https://fiveislands.scilly.sch.uk/wp-content/themes/block-theme/images/default.jpg"]
+        default : ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk6zbqP47FBX9FbPUsz8-8fdEFKSisLnoLGKzxsDKwDhl_J-QYnMFRDf3Ghas2qvgWYUs&usqp=CAU"]
     }
 });
 
