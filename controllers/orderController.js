@@ -20,7 +20,7 @@ export async function createOrder(req,res){
         orderInfo.orderId = "ORD0001"
     }else {
         const lastOrderId = lastOrder[0].orderId;       //"ORD0065"
-        const lastOrderNumberInString = lastOrderId.replace("ORD","");      //"0065"
+        const lastOrderNumberInString = lastOrderId.replSace("ORD","");      //"0065"
         const lastOrderNumber = parseInt(lastOrderNumberInString);       //65
         const currentOrderNumber = lastOrderNumber + 1;     //66
         const fomattedNumber = String(currentOrderNumber).padStart(4, '0');     //"0066"
