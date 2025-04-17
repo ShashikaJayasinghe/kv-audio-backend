@@ -87,21 +87,11 @@ export async function createOrder(req, res) {
 }
 
 export async function getQuote(req, res) {
+  console.log(req.body);
   const data = req.body;
   const orderInfo = {
     orderedItems: [],
   };
-
-  if (lastOrder.length == 0) {
-    orderInfo.orderId = "ORD0001";
-  } else {
-    const lastOrderId = lastOrder[0].orderId; //"ORD0065"
-    const lastOrderNumberInString = lastOrderId.replace("ORD", ""); //"0065"
-    const lastOrderNumber = parseInt(lastOrderNumberInString); //65
-    const currentOrderNumber = lastOrderNumber + 1; //66
-    const fomattedNumber = String(currentOrderNumber).padStart(4, "0"); //"0066"
-    orderInfo.orderId = "ORD" + fomattedNumber; //"ORD0066"
-  }
 
   let oneDayCost = 0;
 
@@ -149,15 +139,13 @@ export async function getQuote(req, res) {
   orderInfo.totalAmount = oneDayCost * data.days;
 
   try {
-    const newOrder = new Order(orderInfo);
-    const result = await newOrder.save();
     res.json({
-      message: "Order create successfully",
-      order: result,
+      message: "Order quotation created successfully",
+      total: orderInfo.totalAmount,
     });
   } catch (e) {
     res.status(500).json({
-      message: "Failed to create order",
+      message: "Failed to create quotation",
     });
   }
 }
