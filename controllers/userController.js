@@ -65,6 +65,19 @@ export function isItCustomer (req) {
     return isCustomer;
 }
 
+export async function getAllUsers (req, res) {
+    if (isItAdmin(req)) {
+        try {
+            const users = await User.find();
+            res.json(users);
+        }catch (error) {
+            res.status(500).json({error : "failed to get users"});
+        }
+    }else {
+        res.status(403).json({error : "You are not authorized to perform this action"});
+    }
+}
+
 
 
 
