@@ -113,6 +113,14 @@ export async function blockOrUnblockUser (req, res) {
     }
 }
 
+export function getUser (req, res) {
+    if (req.user != null) {
+        res.json(req.user);     // users information send as response in json format
+    }else {
+        res.status(403).json({error : "You are not authorized to perform this action"});
+    }
+}
+
 
 
 
