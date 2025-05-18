@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import axios from "axios";
 import nodemailer from "nodemailer";
+import OTP from "../models/otp.js";
 
 dotenv.config();
 const transport = nodemailer.createTransport({      // transport is used to send email
@@ -198,12 +199,20 @@ export async function sendOTP (req, res) {
     if (req.user == null) {
         res.status(403).json({error : "You are not authorized to perform this action"});
         return;
-    }
+    } 
+    const otp = Math.floor(Math.random()*9000) + 1000;        //generate number between 1000 and 9999
+
+    const newOTP = new OTP({        //save otp in database
+        email : req.user.email,
+        otp : otp
+    });
+    await newOTP.save();        // save otp
+
     const message = {
         from : "shashikajay72@gmail.com",
         to : req.user.email,                    // send requested user email
         subject : "Validating OTP",
-        text : "Your OTP code is",
+        text : "Your OTP code is "+otp
     }
 
     transport.sendMail(message, (err, info)=>{
@@ -216,6 +225,38 @@ export async function sendOTP (req, res) {
         }
     });
     
+}
+
+export async function verifyOTP (req,res) {
+    if (req.user == null) {
+        res.status(403).json({error : "You are not authorized to perform this action"});
+        return;
+    } 
+    const code = req.body.code;
+
+    const otp = await OTP.findOne({
+        email : req.user.email,     // find otp by email
+        otp : code
+    });
+
+    if (otp == null) {
+        res.status(404).json({error : "Invalid OTP"});
+        return;
+    }else {
+        await OTP.deleteOne({            // delete otp from database, only need one time that is why we use deleteOne
+            email : req.user.email,
+            otp : code
+        });
+        await User.updateOne(
+            {
+                email : req.user.email
+            },
+            {
+                emailVerified : true
+            }
+        );
+        res.status(200).json({message : "OTP verified successfully"});
+    }
 }
 
 
