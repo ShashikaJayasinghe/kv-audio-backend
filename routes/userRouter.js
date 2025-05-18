@@ -1,5 +1,6 @@
 import express from "express";
 import { blockOrUnblockUser, getAllUsers, getUser, logingWithGoogle, loginUser, registerUser, sendOTP, verifyOTP } from "../controllers/userController.js";
+import ContactMessage from "../models/contactMessage.js";
 
 const userRouter = express.Router();
 
